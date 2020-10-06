@@ -7,7 +7,7 @@ namespace Star
     public class Game
         {
         private Random random = new Random();
-        private int resolutionField = 5;
+        private int resolution = 2;
         private Star[,] field;
         private int randomChance = 3;
         private PictureBox pictureBox;
@@ -19,39 +19,48 @@ namespace Star
             }
         public void Start(int amountStarValue)
             {
-            field = new Star[pictureBox.Width / resolutionField, pictureBox.Height / resolutionField];
-            for (int x = 0; x < pictureBox.Width / resolutionField; x++)
+            field = new Star[pictureBox.Width / resolution, pictureBox.Height / resolution];
+            for (int x = 0; x < pictureBox.Width / resolution; x++)
                 {
-                for (int y = 0; y < pictureBox.Height / resolutionField; y++)
+                for (int y = 0; y < pictureBox.Height / resolution; y++)
                     {
                     if (random.Next((randomChance * 1000) - (amountStarValue) * (randomChance * 1000 / 10 - 20)) == 0)
                         {
                         var star = new Star();
-                        star.color = new SolidBrush(Color.FromArgb(random.Next(185, 256), random.Next(185, 256), random.Next(185, 256)));
+                        star.color = new SolidBrush(Color.FromArgb(random.Next(185, 255), random.Next(185, 255), random.Next(185, 255)));
                         star.x = x;
                         star.y = y;
                         field[x, y] = star;
                         }
-                        
+
                     }
                 }
+
             RefreshGameField();
             }
         public void RefreshGameField()
             {
             Clear();
-            for (int x = 0; x < pictureBox.Width / resolutionField; x++)
+            var field2 = new Star[pictureBox.Width / resolution, pictureBox.Height / resolution];
+            for (int x = 0; x < pictureBox.Width / resolution; x++)
                 {
-                for (int y = 0; y < pictureBox.Height / resolutionField; y++)
+                for (int y = 0; y < pictureBox.Height / resolution; y++)
                     {
                     if (field[x, y] != null)
-                        draw.BrushDot(field[x, y].color, x, y, resolutionField);
+                        {
+                        draw.Dot(field[x, y].color, x, y, resolution);
+                        field[x, y].x++;
+                        field[x, y].y++;
+                        field2[x++, y++] = field[x, y];
+
+                        }
                     }
                 }
+            field = field2;
             }
         private void Clear()
             {
-            draw.BrushFill(Brushes.Black);
+            draw.Fill(Brushes.Black);
             }
         }
     }

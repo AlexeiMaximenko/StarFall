@@ -13,11 +13,11 @@ namespace Star
             pictureBox.Image = new Bitmap(pictureBox.Width, pictureBox.Height);
             graphics = Graphics.FromImage(pictureBox.Image);
             }
-        public void BrushFill(Brush brush)
+        public void Fill(Brush brush)
             {
             graphics.FillRectangle(brush, 0, 0, pictureBox.Width, pictureBox.Height);
             }
-        public void BrushDot(Brush brush, int x, int y, int resolution)
+        public void Dot(Brush brush, int x, int y, int resolution)
             {
             graphics.FillRectangle(brush, x * resolution, y * resolution, 1, 1);
             }

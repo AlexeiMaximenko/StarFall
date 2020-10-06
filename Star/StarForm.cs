@@ -5,6 +5,7 @@ namespace Star
     {
     public partial class StarForm : Form
         {
+        Game game;
         public StarForm()
             {
             InitializeComponent();
@@ -14,18 +15,17 @@ namespace Star
         private void starForm_Load(object sender, EventArgs e)
             {
             stopButton.Enabled = false;
+            
             }
 
         private void startButton_Click(object sender, EventArgs e)
             {
-            if (mainTimer.Enabled == true)
-                return;
-            Game game = new Game(pictureBox);
+            game = new Game(pictureBox);
             game.Start((int)amountStarMenuNumericUpDown.Value);
-            mainTimer.Enabled = true;
             startButton.Enabled = false;
             stopButton.Enabled = true;
             amountStarMenuNumericUpDown.Enabled = false;
+            mainTimer.Enabled = true;
             }
 
         private void stopButton_Click(object sender, EventArgs e)
@@ -41,7 +41,7 @@ namespace Star
 
         private void mainTimer_Tick(object sender, EventArgs e)
             {
-
+            game.RefreshGameField();
             }
         }
     }
